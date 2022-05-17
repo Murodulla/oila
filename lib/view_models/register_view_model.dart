@@ -17,6 +17,6 @@ class RegisterViewModel extends ChangeNotifier {
 
     await _authService.signUpWithMailAndPassword(email, password);
 
-    unawaited(Navigator.of(context).pushReplacementNamed(RoutesNames.home));
+    // unawaited(Navigator.of(context).pushReplacementNamed(RoutesNames.home));
   }
 }

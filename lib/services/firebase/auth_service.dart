@@ -6,7 +6,7 @@ import '../base.service.dart';
 /// This is a basic classe to provide some firebase_auth's utilities
 class AuthService extends BaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  // User user = FirebaseAuth.instance.currentUser!;
+  User? user = FirebaseAuth.instance.currentUser;
 
   Future<bool> signInWithMailAndPassword(
     String mail,
@@ -35,8 +35,9 @@ class AuthService extends BaseService {
     String password,
   ) async {
     try {
-      await _auth.createUserWithEmailAndPassword(
+      UserCredential newUser = await _auth.createUserWithEmailAndPassword(
           email: mail, password: password);
+      await newUser.user?.updateDisplayName('Nomsiz');
     } on FirebaseAuthException catch (e) {
       debugPrint("Sign Up failed. Error: " + e.code);
     }

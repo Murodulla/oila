@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:oila/view_models/login_view_model.dart';
 import 'package:provider/provider.dart';
+
+import '../../routes.dart';
+import '../../view_models/login_view_model.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -16,7 +18,9 @@ class LoginView extends StatelessWidget {
               SizedBox(height: 10),
               _PasswordWidget(),
               SizedBox(height: 10),
-              _LoginButton(),
+              _LoginButtonWidget(),
+              SizedBox(height: 10),
+              _RegisterRouterWidget(),
             ],
           ),
         ),
@@ -25,8 +29,23 @@ class LoginView extends StatelessWidget {
   }
 }
 
-class _LoginButton extends StatelessWidget {
-  const _LoginButton({
+class _RegisterRouterWidget extends StatelessWidget {
+  const _RegisterRouterWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () =>
+          Navigator.of(context).pushReplacementNamed(RoutesNames.register),
+      child: const Text('Register'),
+    );
+  }
+}
+
+class _LoginButtonWidget extends StatelessWidget {
+  const _LoginButtonWidget({
     Key? key,
   }) : super(key: key);
 
@@ -34,8 +53,8 @@ class _LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final model = context.read<LoginViewModel>();
 
-    return TextButton(
-      onPressed: () => model.onLoginButtonPressed(context),
+    return ElevatedButton(
+      onPressed: model.onLoginButtonPressed,
       child: const Text('Login'),
     );
   }

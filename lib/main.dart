@@ -19,6 +19,8 @@ globalInitializer() async {
   );
 }
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   await globalInitializer();
   runApp(const App());
@@ -47,6 +49,7 @@ class App extends StatelessWidget {
       child: MaterialApp(
         title: 'Oila',
         theme: appTheme,
+        navigatorKey: navigatorKey,
         initialRoute: AppRouter.initialRoute,
         onGenerateRoute: (settings) => AppRouter.generateRoute(settings),
       ),
