@@ -51,10 +51,10 @@ class _LoginButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.read<LoginViewModel>();
+    final viewModel = context.read<LoginViewModel>();
 
     return ElevatedButton(
-      onPressed: model.onLoginButtonPressed,
+      onPressed: viewModel.onLoginButtonPressed,
       child: const Text('Login'),
     );
   }
@@ -67,10 +67,10 @@ class _PasswordWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.read<LoginViewModel>();
+    final viewModel = context.read<LoginViewModel>();
 
     return TextField(
-      controller: model.passwordTextController,
+      controller: viewModel.passwordTextController,
       obscureText: true,
       enableSuggestions: false,
       autocorrect: false,
@@ -89,10 +89,10 @@ class _EmailWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.read<LoginViewModel>();
+    final viewModel = context.read<LoginViewModel>();
 
     return TextField(
-      controller: model.emailTextController,
+      controller: viewModel.emailTextController,
       keyboardType: TextInputType.emailAddress,
       enableSuggestions: false,
       autocorrect: false,

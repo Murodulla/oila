@@ -5,8 +5,10 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'helpers/theme.dart';
 import 'routes.dart';
+import 'view_models/home_view_model.dart';
 import 'view_models/login_view_model.dart';
 import 'view_models/register_view_model.dart';
+import 'views/home/home.view.dart';
 import 'views/login/login_view.dart';
 import 'views/register/register_view.dart';
 
@@ -18,8 +20,6 @@ globalInitializer() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 }
-
-final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   await globalInitializer();
@@ -41,7 +41,11 @@ class App extends StatelessWidget {
         ),
         ChangeNotifierProvider<RegisterViewModel>(
           create: (context) => RegisterViewModel(),
-          child: const RegisterView(),
+          child: RegisterView(),
+        ),
+        ChangeNotifierProvider<HomeViewModel>(
+          create: (context) => HomeViewModel(),
+          child: const HomeView(),
         ),
 
         /// You should register yoyr providers here too
@@ -49,7 +53,6 @@ class App extends StatelessWidget {
       child: MaterialApp(
         title: 'Oila',
         theme: appTheme,
-        navigatorKey: navigatorKey,
         initialRoute: AppRouter.initialRoute,
         onGenerateRoute: (settings) => AppRouter.generateRoute(settings),
       ),

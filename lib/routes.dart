@@ -31,7 +31,7 @@ mixin AppRouter {
         );
       case RoutesNames.register:
         return MaterialPageRoute(
-          builder: (context) => const RegisterView(),
+          builder: (context) => RegisterView(),
         );
       case RoutesNames.home:
         return MaterialPageRoute(
