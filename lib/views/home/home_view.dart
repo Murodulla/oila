@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../routes.dart';
 import '../../services/firebase/auth_service.dart';
 import '../../view_models/home_view_model.dart';
 
@@ -9,18 +11,15 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var user = FirebaseAuth.instance.currentUser;
+
     final viewModel = context.read<HomeViewModel>();
-    final user = AuthService().user;
 
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () async => AuthService().signOut(null)
-            // (() {
-            //   Navigator.of(context).pushReplacementNamed(RoutesNames.register);
-            // })
-            ,
+            onPressed: () async => AuthService().signOut(null),
             icon: const Icon(Icons.logout),
           )
         ],
@@ -40,13 +39,18 @@ class HomeView extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           ElevatedButton(
-            onPressed: viewModel.onSaveButtonPressed,
+            onPressed: () => viewModel.onSaveButtonPressed(user),
             child: const Text('Save'),
           ),
           ElevatedButton(
             onPressed: viewModel.onLoadButtonPressed,
             child: const Text('Load'),
-          )
+          ),
+          ElevatedButton(
+            onPressed: () =>
+                Navigator.of(context).pushNamed(RoutesNames.familyTree),
+            child: Text('data'),
+          ),
         ],
       ),
     );

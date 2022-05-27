@@ -8,7 +8,7 @@ import 'routes.dart';
 import 'view_models/home_view_model.dart';
 import 'view_models/login_view_model.dart';
 import 'view_models/register_view_model.dart';
-import 'views/home/home.view.dart';
+import 'views/home/home_view.dart';
 import 'views/login/login_view.dart';
 import 'views/register/register_view.dart';
 
@@ -54,7 +54,7 @@ class App extends StatelessWidget {
         title: 'Oila',
         theme: appTheme,
         initialRoute: AppRouter.initialRoute,
-        onGenerateRoute: (settings) => AppRouter.generateRoute(settings),
+        onGenerateRoute: AppRouter.generateRoute,
       ),
     );
   }

@@ -4,7 +4,7 @@ import '../../models/user_model.dart';
 import '../base.service.dart';
 
 class FirestoreService extends BaseService {
-  final CollectionReference usersCollection =
+  CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
 
   Stream<QuerySnapshot> getStream() {
@@ -26,10 +26,8 @@ class FirestoreService extends BaseService {
 //
   Future<void> createUser(UserModel user) async {
     try {
-      final userDocument = usersCollection.doc(user.referenceId);
-      await userDocument.set(user.toJson());
+      await usersCollection.doc(user.referenceId).set(user.toJson());
     } catch (e) {
-      print('-----------');
       print(e);
     }
   }

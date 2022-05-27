@@ -6,7 +6,7 @@ import '../base.service.dart';
 /// This is a basic classe to provide some firebase_auth's utilities
 class AuthService extends BaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  User? user = FirebaseAuth.instance.currentUser;
+  User? _user = FirebaseAuth.instance.currentUser;
 
   Future<bool> signInWithMailAndPassword(
     String mail,
@@ -15,6 +15,7 @@ class AuthService extends BaseService {
     bool isOk = true;
     try {
       await _auth.signInWithEmailAndPassword(email: mail, password: password);
+      await _user?.reload();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         isOk = false;
@@ -38,6 +39,7 @@ class AuthService extends BaseService {
       UserCredential newUser = await _auth.createUserWithEmailAndPassword(
           email: mail, password: password);
       await newUser.user?.updateDisplayName('Nomsiz');
+      await _user?.reload();
     } on FirebaseAuthException catch (e) {
       debugPrint("Sign Up failed. Error: " + e.code);
     }
