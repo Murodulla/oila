@@ -6,12 +6,13 @@ import '../services/firebase/firestore_service.dart';
 
 class HomeViewModel extends ChangeNotifier {
   final FirestoreService _firestoreService = FirestoreService();
-  final nameTextController = TextEditingController(text: 'Ismsiz kishi');
+  final nameTextController = TextEditingController();
 
   Future<void> onSaveButtonPressed(User? user) async {
     UserModel userModel = UserModel(
-      name: nameTextController.text,
-      referenceId: user!.uid,
+      uid: user!.uid,
+      email: user.email!,
+      displayName: nameTextController.text,
     );
 
     await _firestoreService.createUser(userModel);

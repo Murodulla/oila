@@ -11,7 +11,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  # cupertino_icons: ^1.0.2
   firebase_core: ^1.16.0
   firebase_auth: ^3.3.18
   cloud_firestore: ^3.1.15
@@ -19,6 +18,7 @@ dependencies:
   freezed_annotation: ^2.0.3
   json_annotation: ^4.5.0
   graphview: ^1.1.1
+  form_validator: ^1.0.2
 
 dev_dependencies:
   flutter_test:

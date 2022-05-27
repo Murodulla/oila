@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import '../routes.dart';
-import '../services/firebase/auth_service.dart';
+
+import '../providers/auth_provider.dart';
 
 class RegisterViewModel extends ChangeNotifier {
-  final AuthService _authService = AuthService();
+  // final AuthService _authService = AuthService();
+  final AuthProvider _authProvider = AuthProvider();
 
   final emailTextController =
       TextEditingController(text: 'example1@example.com');
@@ -15,8 +16,7 @@ class RegisterViewModel extends ChangeNotifier {
     final email = emailTextController.text.trim();
     final password = passwordTextController.text.trim();
 
-    await _authService.signUpWithMailAndPassword(email, password);
-
-    // unawaited(Navigator.of(context).pushReplacementNamed(RoutesNames.home));
+    final success =
+        await _authProvider.registerWithEmailAndPassword(email, password);
   }
 }

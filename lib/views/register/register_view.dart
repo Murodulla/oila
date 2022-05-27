@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 import 'package:provider/provider.dart';
 
 import '../../routes.dart';
@@ -14,23 +15,94 @@ class RegisterView extends StatelessWidget {
     return Scaffold(
       body: Align(
         child: SingleChildScrollView(
-          // TODO: Validator qo'shish kerak reg va logga
           child: Form(
             key: _formKey,
             child: Column(
-              children: const [
-                _EmailWidget(),
-                SizedBox(height: 10),
-                _PasswordWidget(),
-                SizedBox(height: 10),
-                _RegisterButtonWidget(),
-                SizedBox(height: 10),
-                _LoginRouterWidget(),
+              children: [
+                const _EmailWidget(),
+                const SizedBox(height: 10),
+                const _PasswordWidget(),
+                const SizedBox(height: 10),
+                _RegisterButtonWidget(formKey: _formKey),
+                const SizedBox(height: 10),
+                const _LoginRouterWidget(),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class _EmailWidget extends StatelessWidget {
+  const _EmailWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = context.read<RegisterViewModel>();
+
+    return TextFormField(
+      controller: viewModel.emailTextController,
+      keyboardType: TextInputType.emailAddress,
+      enableSuggestions: false,
+      autocorrect: false,
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: 'email',
+      ),
+      validator: ValidationBuilder().email().build(),
+    );
+  }
+}
+
+class _PasswordWidget extends StatelessWidget {
+  const _PasswordWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = context.read<RegisterViewModel>();
+
+    return TextFormField(
+      controller: viewModel.passwordTextController,
+      obscureText: true,
+      enableSuggestions: false,
+      autocorrect: false,
+      decoration: const InputDecoration(
+        border: OutlineInputBorder(),
+        labelText: 'password',
+      ),
+      validator: ValidationBuilder().minLength(6).build(),
+    );
+  }
+}
+
+class _RegisterButtonWidget extends StatelessWidget {
+  const _RegisterButtonWidget({
+    required this.formKey,
+    Key? key,
+  }) : super(key: key);
+
+  final GlobalKey<FormState> formKey;
+
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = context.read<RegisterViewModel>();
+
+    return ElevatedButton(
+      onPressed: () {
+        if (formKey.currentState!.validate()) {
+          viewModel.onRegisterButtonPressed(context).then(
+                (value) => Navigator.of(context)
+                    .pushReplacementNamed(AppRouter.initialRoute),
+              );
+        }
+      },
+      child: const Text('Register'),
     );
   }
 }
@@ -46,69 +118,6 @@ class _LoginRouterWidget extends StatelessWidget {
       onPressed: () =>
           Navigator.of(context).pushReplacementNamed(RoutesNames.login),
       child: const Text('Login'),
-    );
-  }
-}
-
-class _RegisterButtonWidget extends StatelessWidget {
-  const _RegisterButtonWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final viewModel = context.read<RegisterViewModel>();
-    // TODO: registerda mavjudi register qilinsa authwrapperga o'tyapti (login pagega) va keyin login bo'lmayapti. Saqlash kerak agar registered bo'lsa.
-    return ElevatedButton(
-      onPressed: () => viewModel.onRegisterButtonPressed(context).then(
-            (value) => Navigator.of(context)
-                .pushReplacementNamed(AppRouter.initialRoute),
-          ),
-      child: const Text('Register'),
-    );
-  }
-}
-
-class _PasswordWidget extends StatelessWidget {
-  const _PasswordWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final viewModel = context.read<RegisterViewModel>();
-
-    return TextField(
-      controller: viewModel.passwordTextController,
-      obscureText: true,
-      enableSuggestions: false,
-      autocorrect: false,
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: 'password',
-      ),
-    );
-  }
-}
-
-class _EmailWidget extends StatelessWidget {
-  const _EmailWidget({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final viewModel = context.read<RegisterViewModel>();
-
-    return TextField(
-      controller: viewModel.emailTextController,
-      keyboardType: TextInputType.emailAddress,
-      enableSuggestions: false,
-      autocorrect: false,
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(),
-        labelText: 'email',
-      ),
     );
   }
 }

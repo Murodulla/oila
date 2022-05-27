@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 import 'helpers/theme.dart';
+import 'providers/auth_provider.dart';
 import 'routes.dart';
 import 'view_models/home_view_model.dart';
 import 'view_models/login_view_model.dart';
@@ -37,7 +38,7 @@ class App extends StatelessWidget {
         /// the WideScopeBaseView
         ChangeNotifierProvider<LoginViewModel>(
           create: (context) => LoginViewModel(),
-          child: const LoginView(),
+          child: LoginView(),
         ),
         ChangeNotifierProvider<RegisterViewModel>(
           create: (context) => RegisterViewModel(),
@@ -49,6 +50,9 @@ class App extends StatelessWidget {
         ),
 
         /// You should register yoyr providers here too
+        ChangeNotifierProvider<AuthProvider>(
+          create: (context) => AuthProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'Oila',

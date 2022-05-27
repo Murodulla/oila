@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import '../main.dart';
-import '../routes.dart';
-import '../services/firebase/auth_service.dart';
+
+import '../providers/auth_provider.dart';
 
 class LoginViewModel extends ChangeNotifier {
-  final AuthService _authService = AuthService();
+  // final AuthService _authService = AuthService();
+  final AuthProvider _authProvider = AuthProvider();
 
   final emailTextController =
       TextEditingController(text: 'example@example.com');
@@ -16,14 +16,8 @@ class LoginViewModel extends ChangeNotifier {
     final email = emailTextController.text.trim();
     final password = passwordTextController.text.trim();
 
-    // bool isLoggedId =
-    //     await _authService.signInWithMailAndPassword(email, password);
-
-    // if (isLoggedId) {
-    //   unawaited(Navigator.of(context).pushReplacementNamed(RoutesNames.home));
-    // }
-
-    await _authService.signInWithMailAndPassword(email, password);
-    // navigatorKey.currentState?.popUntil((route) => route.isFirst);
+    // await _authService.signInWithMailAndPassword(email, password);
+    final success =
+        await _authProvider.signInWithEmailAndPassword(email, password);
   }
 }

@@ -31,7 +31,7 @@ mixin AppRouter {
         );
       case RoutesNames.login:
         return MaterialPageRoute(
-          builder: (context) => const LoginView(),
+          builder: (context) => LoginView(),
         );
       case RoutesNames.register:
         return MaterialPageRoute(

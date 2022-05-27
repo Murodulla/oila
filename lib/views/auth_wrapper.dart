@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/auth_provider.dart';
 import 'home/home_view.dart';
 import 'login/login_view.dart';
 
@@ -9,22 +10,27 @@ class AuthWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.authStateChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else if (snapshot.hasError) {
-          return const Center(
-            child: Text('Something went wrong'),
-          );
-        } else if (snapshot.hasData) {
-          return const HomeView();
-        } else {
-          return const LoginView();
+    return Consumer<AuthProvider>(
+      builder: (context, value, child) {
+        switch (value.status) {
+          case Status.uninitialized:
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          case Status.authenticated:
+            return const HomeView();
+
+          case Status.registering:
+          case Status.authenticating:
+          case Status.unauthenticated:
+            return LoginView();
+
+          default:
+            break;
         }
+        return const Center(
+          child: Text('Error'),
+        );
       },
     );
   }

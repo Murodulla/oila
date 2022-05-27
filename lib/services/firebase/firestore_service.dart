@@ -12,11 +12,11 @@ class FirestoreService extends BaseService {
   }
 
   Future<void> updateUser(UserModel user) async {
-    await usersCollection.doc(user.referenceId).update(user.toJson());
+    await usersCollection.doc(user.uid).update(user.toJson());
   }
 
   Future<void> deleteUser(UserModel user) async {
-    await usersCollection.doc(user.referenceId).delete();
+    await usersCollection.doc(user.uid).delete();
   }
 
   Future<DocumentReference> addUser(UserModel user) async {
@@ -26,7 +26,7 @@ class FirestoreService extends BaseService {
 //
   Future<void> createUser(UserModel user) async {
     try {
-      await usersCollection.doc(user.referenceId).set(user.toJson());
+      await usersCollection.doc(user.uid).set(user.toJson());
     } catch (e) {
       print(e);
     }
