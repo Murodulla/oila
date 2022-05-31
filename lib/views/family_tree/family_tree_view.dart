@@ -11,15 +11,17 @@ class FamilyTreeView extends StatelessWidget {
     final node1 = Node.Id(1);
     final node2 = Node.Id(2);
     final node3 = Node.Id(3);
+    final node4 = Node.Id(4);
 
     graph.addEdge(node1, node2);
-    // graph.addEdge(node1, node3);
+    graph.addEdge(node1, node3);
+    graph.addEdge(node2, node4);
 
     builder
       ..siblingSeparation = (100)
       ..levelSeparation = (150)
       ..subtreeSeparation = (150)
-      ..orientation = (BuchheimWalkerConfiguration.ORIENTATION_LEFT_RIGHT);
+      ..orientation = (BuchheimWalkerConfiguration.ORIENTATION_TOP_BOTTOM);
 
     return Scaffold(
       appBar: AppBar(

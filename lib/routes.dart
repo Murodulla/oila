@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'views/auth_wrapper.dart';
+import 'auth_wrapper.dart';
 import 'views/family_tree/family_tree_view.dart';
 import 'views/home/home_view.dart';
 import 'views/login/login_view.dart';
